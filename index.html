@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Какая профессия тебе подходит?</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 24px;
+      font-family: Arial, sans-serif;
+      background: #f1f5ff;
+      color: #20243a;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 28px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 5px 20px #1d2b5018;
+    }
+
+    h1 {
+      color: #4d43b5;
+      text-align: center;
+    }
+
+    .intro {
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    fieldset {
+      margin: 22px 0;
+      padding: 16px;
+      border: 2px solid #d9ddf5;
+      border-radius: 12px;
+    }
+
+    legend {
+      padding: 0 8px;
+      font-weight: bold;
+    }
+
+    label {
+      display: block;
+      margin: 12px 0;
+      cursor: pointer;
+    }
+
+    input {
+      margin-right: 8px;
+    }
+
+    button {
+      display: block;
+      margin: 24px auto;
+      padding: 13px 22px;
+      border: 0;
+      border-radius: 10px;
+      background: #5146c8;
+      color: white;
+      font-size: 17px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #392fa5;
+    }
+
+    #result {
+      padding: 18px;
+      border-radius: 12px;
+      background: #eef9f1;
+      line-height: 1.6;
+    }
+
+    .small {
+      color: #555;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1>Какая профессия тебе подходит?</h1>
+
+    <p class="intro">
+      Ответь на вопросы и посмотри, какие занятия могут тебе понравиться.
+      Здесь нет неправильных ответов!
+    </p>
+
+    <form id="quiz">
+      <fieldset>
+        <legend>1. Что тебе интереснее всего?</legend>
+        <label><input type="radio" name="q1" value="people" required> Помогать и учить людей</label>
+        <label><input type="radio" name="q1" value="tech"> Разбираться в технике и компьютерах</label>
+        <label><input type="radio" name="q1" value="art"> Придумывать и создавать что-то красивое</label>
+        <label><input type="radio" name="q1" value="nature"> Заботиться о животных и природе</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Какое занятие ты бы выбрал(а) для команды?</legend>
+        <label><input type="radio" name="q2" value="people" required> Объяснять другим правила игры</label>
+        <label><input type="radio" name="q2" value="tech"> Собрать робота или придумать игру</label>
+        <label><input type="radio" name="q2" value="art"> Нарисовать афишу или придумать историю</label>
+        <label><input type="radio" name="q2" value="nature"> Устроить прогулку и исследовать растения</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Что тебе обычно легче даётся?</legend>
+        <label><input type="radio" name="q3" value="people" required> Слушать человека и поддержать его</label>
+        <label><input type="radio" name="q3" value="tech"> Найти ошибку и понять, как всё устроено</label>
+        <label><input type="radio" name="q3" value="art"> Придумать необычную идею</label>
+        <label><input type="radio" name="q3" value="nature"> Замечать детали в природе</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>4. Какой школьный проект тебе ближе?</legend>
+        <label><input type="radio" name="q4" value="people" required> Сделать памятку, которая поможет другим</label>
+        <label><input type="radio" name="q4" value="tech"> Создать простую программу или модель</label>
+        <label><input type="radio" name="q4" value="art"> Сделать комикс, рисунок или видеосюжет</label>
+        <label><input type="radio" name="q4" value="nature"> Провести наблюдение за растениями или погодой</label>
+      </fieldset>
+
+      <fieldset>
+        <legend>5. Что приносит тебе больше радости?</legend>
+        <label><input type="radio" name="q5" value="people" required> Когда кому-то стало легче благодаря мне</label>
+        <label><input type="radio" name="q5" value="tech"> Когда у меня получилось решить задачу</label>
+        <label><input type="radio" name="q5" value="art"> Когда я придумал(а) что-то своё</label>
+        <label><input type="radio" name="q5" value="nature"> Когда я узнаю что-то новое о природе</label>
+      </fieldset>
+
+      <button type="submit">Узнать результат</button>
+    </form>
+
+    <section id="result" hidden aria-live="polite"></section>
+
+    <p class="small">
+      Это игровая викторина, а не настоящий тест и не готовое решение.
+      Ты можешь заинтересоваться многими профессиями — и передумать в будущем.
+    </p>
+  </main>
+
+  <script>
+    const form = document.getElementById("quiz");
+    const result = document.getElementById("result");
+
+    const ideas = {
+      people: {
+        title: "Тебе могут быть интересны занятия с людьми",
+        jobs: "учитель, врач, ветеринар, психолог, тренер или спасатель"
+      },
+      tech: {
+        title: "Тебе могут быть интересны техника и задачи",
+        jobs: "программист, инженер, механик, конструктор или исследователь"
+      },
+      art: {
+        title: "Тебе могут быть интересны творческие занятия",
+        jobs: "художник, дизайнер, писатель, музыкант или архитектор"
+      },
+      nature: {
+        title: "Тебе могут быть интересны природа и животные",
+        jobs: "биолог, ветеринар, эколог, фермер или лесничий"
+      }
+    };
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const scores = {
+        people: 0,
+        tech: 0,
+        art: 0,
+        nature: 0
+      };
+
+      const answers = new FormData(form);
+
+      for (const answer of answers.values()) {
+        scores[answer] += 1;
+      }
+
+      const bestCategory = Object.keys(scores).reduce(function(best, category) {
+        return scores[category] > scores[best] ? category : best;
+      }, "people");
+
+      const idea = ideas[bestCategory];
+
+      result.innerHTML =
+        "<h2>" + idea.title + "</h2>" +
+        "<p>Попробуй узнать больше о таких профессиях: <strong>" +
+        idea.jobs + ".</strong></p>" +
+        "<p>Это только идеи. Самое важное — что интересно именно тебе!</p>";
+
+      result.hidden = false;
+      result.scrollIntoView({ behavior: "smooth" });
+    });
+  </script>
+</body>
+</html>
